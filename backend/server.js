@@ -42,7 +42,7 @@ app.post("/register", async (req, res) => {
         })
         await user.save();
     } catch (error) {
-        res.send({ error });
+        res.send({ error: error.message });
     }
 });
 
@@ -52,7 +52,7 @@ app.post("/favorite", async (req, res) => {
         const {email, title} = req.body;
         await User.findOneAndUpdate({ email: email}, {$addToSet:{ title: title }});
     } catch (error) {
-        res.send({ error });
+        res.send({ error: error.message });
     }
 });
 
@@ -63,7 +63,7 @@ app.get("/genres", async (req, res) => {
         const movies = await Movie.find({genres: genre});
         res.send(movies);
     } catch (error) {
-        res.send({ error });
+        res.send({ error: error.message });
     }
 });
 
@@ -74,7 +74,7 @@ app.get("/favorited", async (req, res) => {
         const user = await User.findOne({email});
         res.send(user.liked_movies);
     } catch (error) {
-        res.send({ error });
+        res.send({ error: error.message });
     }
 });
 
@@ -90,6 +90,6 @@ app.get("/signin", async (req, res) => {
             res.send({message: "Incorrect Password"});
         }
     } catch (error) {
-        res.send({ error });
+        res.send({ error: error.message });
     }
 })
