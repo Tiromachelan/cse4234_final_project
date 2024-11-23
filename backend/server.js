@@ -10,8 +10,10 @@ const initializeDatabase = require("./scripts/initializeDatabase");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
 const Movie = require("./models/movie");
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
+app.use(cookieParser());
 
 // for serving build
 app.use(express.static(path.join(__dirname, '../frontend/build')));
@@ -68,7 +70,7 @@ app.get("/genres", async (req, res) => {
     }
 });
 
-// Return movies that the currently logged-in user has favorited
+// Return movies that the currently logged-in user has favorited.  The email is in the cookie that is set
 app.get("/favorited", async (req, res) => {
     try {
         const email = req.body.email;
@@ -79,7 +81,7 @@ app.get("/favorited", async (req, res) => {
     }
 });
 
-// Signin
+// Sign in.  Also sets cookies
 app.get("/signin", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -87,10 +89,21 @@ app.get("/signin", async (req, res) => {
         const isCorrectPassword = await bcrypt.compare(password, user.password);
         if (isCorrectPassword) {
             res.send(email);
+            res.cookie("session-cookie", email);
         } else {
             res.send({message: "Incorrect Password"});
         }
     } catch (error) {
         res.send({ error: error.message });
     }
-})
+});
+
+// Sign out, clear session cookie
+app.get("/signout", (req, res) => {
+    try {
+        res.clearCookie("session-cookie");
+        res.send({message: "logged out"});
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+});
