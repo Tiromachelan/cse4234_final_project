@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const initializeDatabase = require("./scripts/initializeDatabase");
 const bcrypt = require("bcrypt");
 const User = require("./models/user");
+const Movie = require("./models/movie");
 
 app.use(express.json());
 
@@ -60,7 +61,7 @@ app.post("/favorite", async (req, res) => {
 app.get("/genres", async (req, res) => {
     try {
         const genre = req.body.genre;
-        const movies = await Movie.find({genres: genre});
+        const movies = await Movie.find({"info.genres": "Adult"});
         res.send(movies);
     } catch (error) {
         res.send({ error: error.message });
