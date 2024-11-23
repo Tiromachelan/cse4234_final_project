@@ -61,7 +61,7 @@ app.post("/favorite", async (req, res) => {
 app.get("/genres", async (req, res) => {
     try {
         const genre = req.body.genre;
-        const movies = await Movie.find({"info.genres": "Adult"});
+        const movies = await Movie.find({"info.genres": genre});
         res.send(movies);
     } catch (error) {
         res.send({ error: error.message });
