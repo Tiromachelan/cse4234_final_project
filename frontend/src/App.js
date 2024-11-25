@@ -20,13 +20,13 @@ function App() {
         {/* Register Component */}
         <section className="register">
           <h2>Register</h2>
-          <Register />
+          <Register/>
         </section>
 
         {/* SignIn Component */}
         <section className="sign-in">
           <h2>Sign In</h2>
-          <SignIn />
+          <SignIn/>
         </section>
         <section className="genre-section">
           <h2>Action</h2>
