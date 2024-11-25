@@ -5,8 +5,8 @@ function Navigation() {
     return (
         <nav className = "Navigation">
             <ul className = "Navigation-list">
-                <li className="Navigation-item">Register</a></li>
-                <li className="Navigation-item">Sign In</a></li>
+                <li className="Navigation-item">Register</li>
+                <li className="Navigation-item">Sign In</li>
                 <li className="Navigation-item">Home</li>
                 <li className="Navigation-item">Genres</li>
                 <li className="Navigation-item">Favorites</li>
