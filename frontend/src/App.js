@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import SignIn from './components/SignIn';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -15,6 +17,17 @@ function App() {
 
       {/* Main Content Section */}
       <main>
+        {/* Register Component */}
+        <section className="register">
+          <h2>Register</h2>
+          <Register />
+        </section>
+
+        {/* SignIn Component */}
+        <section className="sign-in">
+          <h2>Sign In</h2>
+          <SignIn />
+        </section>
         <section className="genre-section">
           <h2>Action</h2>
           <div className="movie-cards">
