@@ -8,4 +8,4 @@ In backend:
 
 `npm install`
 
-`node server.js`
+`node app.js`
