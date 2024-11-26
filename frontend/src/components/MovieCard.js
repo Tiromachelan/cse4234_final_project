@@ -1,5 +1,5 @@
 import React from "react";
-import "./MovieCard.css"; // Your CSS for styling
+import "./MovieCard.css";
 
 const MovieCard = ({ title, imageUrl, rating, duration }) => {
   const formatDuration = (seconds) => {
