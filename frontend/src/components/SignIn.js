@@ -22,8 +22,26 @@ export default function SignIn() {
     <div className="sign-in-form">
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
-        <input name="email"/>
-        <input name="password"/>
+        {/* Username/Email Label and Input */}
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        />
+        
+        {/* Password Label and Input */}
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+        />
+        
         <button type="submit">Sign In</button>
       </form>
     </div>
