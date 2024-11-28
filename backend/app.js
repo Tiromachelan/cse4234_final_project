@@ -60,11 +60,20 @@ app.post("/favorite", async (req, res) => {
 });
 
 // Return movies by a specified genre
-app.get("/genres", async (req, res) => {
+app.post("/genres", async (req, res) => {
     try {
         const genre = req.body.genre;
-        const movies = await Movie.find({"info.genres": genre});
+        const movies = await Movie.find({"info.genres": genre}).sort({"info.rating":-1});
         res.send(movies);
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+});
+
+app.get("/genrelist", async (req, res) => {
+    try {
+        const genres = await Movie.distinct("info.genres");
+        res.send(genres);
     } catch (error) {
         res.send({ error: error.message });
     }
