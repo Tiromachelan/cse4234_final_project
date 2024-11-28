@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import SignIn from './components/SignIn';
 import Register from './components/Register';
+import Movies from './components/Movies'
 
 function App() {
   return (
@@ -28,50 +29,7 @@ function App() {
           <h2>Sign In</h2>
           <SignIn/>
         </section>
-        <section className="genre-section">
-          <h2>Action</h2>
-          <div className="movie-cards">
-            {/* Example movie card */}
-            <div className="movie-card">
-              <img
-                src="https://via.placeholder.com/150x200"
-                alt="Movie Poster"
-                className="movie-poster"
-              />
-              <div className="movie-info">
-                <h3>Movie Title</h3>
-                <p>Rating: 8.5</p>
-                <p>Duration: 2h 10m</p>
-                <div className="movie-buttons">
-                  <button className="view-btn">View Movie</button>
-                  <button className="fav-btn">Add to Favorites</button>
-                </div>
-              </div>
-            </div>
-            {/* Add more movie cards here for ACTION*/}
-          </div>
-          <h2>Drama</h2>
-          <div className="movie-cards">
-            {/* Example movie card for DRAMA */}
-            <div className="movie-card">
-              <img
-                src="https://via.placeholder.com/150x200"
-                alt="Movie Poster"
-                className="movie-poster"
-              />
-              <div className="movie-info">
-                <h3>Movie Title</h3>
-                <p>Rating: 8.5</p>
-                <p>Duration: 2h 10m</p>
-                <div className="movie-buttons">
-                  <button className="view-btn">View Movie</button>
-                  <button className="fav-btn">Add to Favorites</button>
-                </div>
-              </div>
-            </div>
-            {/* Add more Drama movie cards here for DRAMA */}
-          </div>
-        </section>
+        <Movies/>
       </main>
     </div>
   );
