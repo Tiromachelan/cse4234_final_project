@@ -70,6 +70,7 @@ app.post("/genres", async (req, res) => {
     }
 });
 
+// Return a list of all possible genres
 app.get("/genrelist", async (req, res) => {
     try {
         const genres = await Movie.distinct("info.genres");

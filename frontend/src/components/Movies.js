@@ -29,7 +29,7 @@ function Movies(){
         fetch("http://localhost:3000/genrelist", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
-        }).then(res => res.json()).then((glist) => setGenres(glist)).catch(console.log("ERROR"));
+        }).then(res => res.json()).then((glist) => setGenres(glist)).catch((e) => console.log(e));
       }, []);
     return(
         <div className = "movies">

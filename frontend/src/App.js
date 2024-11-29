@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './App.css';
 import SignIn from './components/SignIn';
 import Register from './components/Register';
 import Movies from './components/Movies';
+import UserContext from './components/User';
 
 
 function App() {
+  const {cookies, setCookie, removeCookie} = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("register");
+
+  const acceptWarn = () => {
+    setCookie("warn", "warned");
+  }
 
   const openModal = (contentType) => {
     setModalContent(contentType);
@@ -47,7 +53,14 @@ function App() {
           </div>
         </div>
       )}
+      {!(cookies.warn === "warned") && (
+        <div className="warning-box">
+          <h2>This website uses cookies</h2>
+          <button className="warning-button" onClick={acceptWarn}>X</button>
+        </div>
+      )}
     </div>
+    
   );
 }
 

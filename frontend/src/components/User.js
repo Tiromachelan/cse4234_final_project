@@ -1,15 +1,20 @@
 import { createContext } from 'react';
-import { useState } from 'react';
+import { CookiesProvider, useCookies } from 'react-cookie'
 
 const UserContext = createContext({});
 
 function UserProviderWrapper({ children }) {
-  const [username, setUsername] = useState();
+    const [cookies, setCookie, removeCookie] = useCookies();
+
+
 
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
-      {children}
-    </UserContext.Provider>
+    <CookiesProvider defaultSetOptions={{ path: '/' }}>
+        <UserContext.Provider value={{ cookies, setCookie, removeCookie }}>
+            {children}
+
+        </UserContext.Provider>
+    </CookiesProvider>
   );
 }
 
