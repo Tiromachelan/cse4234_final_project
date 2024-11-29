@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useContext } from 'react';
 import MovieCard from './MovieCard';
-import UserContext from '../User';
+import UserContext from './User';
 
 function UserAccount() {
   const [movies, setMovies] = useState([]);
