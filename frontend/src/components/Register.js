@@ -32,7 +32,7 @@ export default function Register({ closeModal }) {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Registration is complete.");
+          alert("Registration is complete, please sign in.");
         } else {
           alert("Registration failed. Please try again.");
         }
