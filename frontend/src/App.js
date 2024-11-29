@@ -1,45 +1,80 @@
-import React, { useState, useEffect, useContext } from 'react';
+// frontend/src/App.js
+
+import React, { useState, useContext } from 'react';
 import './App.css';
 import SignIn from './components/SignIn';
 import Register from './components/Register';
 import Movies from './components/Movies';
-import UserContext from './components/User';
-
+import UserAccount from './components/UserAccount';
+import UserContext, { UserProviderWrapper } from './components/User';
 
 function App() {
-  const {cookies, setCookie, removeCookie} = useContext(UserContext);
+  const { cookies, setCookie, removeCookie } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("register");
+  const [view, setView] = useState('movies'); // 'movies' or 'userAccount'
 
   const acceptWarn = () => {
     setCookie("warn", "warned");
-  }
+  };
 
   const openModal = (contentType) => {
     setModalContent(contentType);
     setIsModalOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
+
+  // Function to handle sign out
+  const handleSignOut = () => {
+    fetch('/signout', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then(() => {
+        removeCookie('session-cookie');
+        setView('movies');
+      })
+      .catch(error => console.error(error));
+  };
+
+  const isLoggedIn = cookies['session-cookie'];
 
   return (
     <div className="App">
       {/* Header Section */}
       <header className="App-header">
-        <div className="logo">NETFITZ</div>
+        <div className="logo" onClick={() => setView('movies')}>NETFITZ</div>
         <div className="header-right">
-          <button className="register-btn" onClick={() => openModal("register")}>
-            Register
-          </button>
-          <span className="welcome-msg">Welcome, user</span>
+          {!isLoggedIn && (
+            <>
+              <button className="register-btn" onClick={() => openModal("register")}>
+                Register
+              </button>
+              <button className="register-btn" onClick={() => openModal("signin")}>
+                Sign In
+              </button>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <button className="register-btn" onClick={() => setView('userAccount')}>
+                My Account
+              </button>
+              <button className="register-btn" onClick={handleSignOut}>
+                Sign Out
+              </button>
+            </>
+          )}
         </div>
       </header>
 
       {/* Main Content Section */}
       <main>
-        <Movies/>
+        {view === 'movies' && <Movies />}
+        {view === 'userAccount' && <UserAccount />}
       </main>
 
       {/* Modal Section */}
@@ -49,10 +84,13 @@ function App() {
             <button className="close-btn" onClick={closeModal}>
               ×
             </button>
-            {modalContent === "register" ? <Register /> : <SignIn />}
+            {modalContent === "register" && <Register closeModal={closeModal} />}
+            {modalContent === "signin" && <SignIn closeModal={closeModal} />}
           </div>
         </div>
       )}
+
+      {/* Cookie Consent Banner */}
       {!(cookies.warn === "warned") && (
         <div className="warning-box">
           <h2>This website uses cookies</h2>
@@ -60,8 +98,13 @@ function App() {
         </div>
       )}
     </div>
-    
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <UserProviderWrapper>
+      <App />
+    </UserProviderWrapper>
+  );
+}
