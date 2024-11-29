@@ -7,7 +7,6 @@ const User = require("../models/user");
 
 function initializeDatabase() {
     Movie.collection.drop();
-    User.collection.drop();
     try {
         Movie.insertMany(data);
     } catch (error) {
