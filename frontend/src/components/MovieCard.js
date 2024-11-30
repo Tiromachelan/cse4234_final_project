@@ -1,10 +1,8 @@
-// frontend/src/components/MovieCard.js
-
 import React, { useContext } from "react";
 import "./MovieCard.css";
-import UserContext from './User';
+import UserContext from '../User';
 
-const MovieCard = ({ title, imageUrl, rating, duration }) => {
+const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteToggle }) => {
   const { cookies } = useContext(UserContext);
   const isLoggedIn = cookies['session-cookie'];
 
@@ -12,7 +10,7 @@ const MovieCard = ({ title, imageUrl, rating, duration }) => {
     fetch('/favorite', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', // Include cookies in the request
+      credentials: 'include',
       body: JSON.stringify({ title })
     })
       .then(res => res.json())
@@ -21,6 +19,26 @@ const MovieCard = ({ title, imageUrl, rating, duration }) => {
           alert('Error adding to favorites: ' + data.error);
         } else {
           alert('Added to favorites!');
+          if (onFavoriteToggle) onFavoriteToggle();
+        }
+      })
+      .catch(error => console.error(error));
+  };
+
+  const handleRemoveFromFavorites = () => {
+    fetch('/unfavorite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ title })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error removing from favorites: ' + data.error);
+        } else {
+          alert('Removed from favorites!');
+          if (onFavoriteToggle) onFavoriteToggle();
         }
       })
       .catch(error => console.error(error));
@@ -35,20 +53,31 @@ const MovieCard = ({ title, imageUrl, rating, duration }) => {
 
   return (
     <div className="movie-card">
-      <img src={imageUrl} alt={title} className="movie-poster" />
+      <img src={imageUrl || '/placeholder.jpg'} alt={title} className="movie-poster" />
       <div className="movie-info">
         <h3>{title}</h3>
         <p>Rating: {rating || 'N/A'}</p>
         <p>Duration: {formatDuration(duration)}</p>
         <div className="movie-actions">
           <button className="view-btn">View Movie</button>
-          <button
-            className="fav-btn"
-            onClick={handleAddToFavorites}
-            disabled={!isLoggedIn}
-          >
-            {isLoggedIn ? 'Add to Favorites' : 'Login to Favorite'}
-          </button>
+          {isLoggedIn && (
+            <>
+              {isFavorited ? (
+                <button className="fav-btn" onClick={handleRemoveFromFavorites}>
+                  Remove from Favorites
+                </button>
+              ) : (
+                <button className="fav-btn" onClick={handleAddToFavorites}>
+                  Add to Favorites
+                </button>
+              )}
+            </>
+          )}
+          {!isLoggedIn && (
+            <button className="fav-btn" disabled>
+              Login to Favorite
+            </button>
+          )}
         </div>
       </div>
     </div>
