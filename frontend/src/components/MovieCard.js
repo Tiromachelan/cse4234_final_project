@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./MovieCard.css";
-import UserContext from '../User';
+import UserContext from './User';
 
 const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteToggle }) => {
   const { cookies } = useContext(UserContext);
