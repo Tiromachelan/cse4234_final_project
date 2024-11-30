@@ -69,6 +69,23 @@ app.post("/favorite", async (req, res) => {
         res.send({ error: error.message });
     }
 });
+// Unfavorite a movie
+app.post("/unfavorite", async (req, res) => {
+    try {
+        const email = req.cookies["session-cookie"];
+        if (!email) {
+            return res.status(401).send({ error: "Not authenticated" });
+        }
+        const { title } = req.body;
+        await User.findOneAndUpdate(
+            { email },
+            { $pull: { favorited_movies: title } }
+        );
+        res.send({ message: "Movie removed from favorites" });
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+});
 
 // Return movies by a specified genre
 app.post("/genres", async (req, res) => {
@@ -90,7 +107,6 @@ app.get("/genrelist", async (req, res) => {
         res.send({ error: error.message });
     }
 });
-
 // Return movies that the currently logged-in user has favorited
 app.get("/favorited", async (req, res) => {
     try {
