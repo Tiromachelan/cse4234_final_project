@@ -1,19 +1,18 @@
 // frontend/src/components/UserAccount.js
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import MovieCard from './MovieCard';
 import UserContext from './User';
 
 function UserAccount() {
   const [movies, setMovies] = useState([]);
   const [message, setMessage] = useState('');
-  const { cookies } = useContext(UserContext);
 
-  useEffect(() => {
+  const fetchFavoritedMovies = () => {
     fetch('/favorited', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', // Include cookies in the request
+      credentials: 'include',
     })
       .then(res => {
         if (res.status === 401) {
@@ -33,6 +32,10 @@ function UserAccount() {
         console.error(error);
         setMessage('An error occurred.');
       });
+  };
+
+  useEffect(() => {
+    fetchFavoritedMovies();
   }, []);
 
   if (message) {
@@ -52,6 +55,8 @@ function UserAccount() {
           imageUrl={movie.info.image_url}
           rating={movie.info.rating}
           duration={movie.info.running_time_secs}
+          isFavorited={true}
+          onFavoriteToggle={fetchFavoritedMovies}
         />
       ))}
     </div>
