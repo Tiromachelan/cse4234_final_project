@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import "./MovieCard.css";
+import "../style/MovieCard.css";
+import placeholderImage from '../assets/placeholder.png';
 import UserContext from './User';
 
 const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteToggle }) => {
@@ -51,9 +52,17 @@ const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteT
     return `${hours}h ${minutes}m`;
   };
 
+  const formatImgURL = (imageUrl) => {
+    if (imageUrl.startsWith('http://')) {
+      return imageUrl.replace('http://', 'https://');
+    } else {
+      return imageUrl;
+    }
+  };
+
   return (
     <div className="movie-card">
-      <img src={imageUrl || '/placeholder.jpg'} alt={title} className="movie-poster" />
+      <img src={formatImgURL(imageUrl) || placeholderImage} alt={title} className="movie-poster" onError={(error) => error.target.src = placeholderImage} />
       <div className="movie-info">
         <h3>{title}</h3>
         <p>Rating: {rating || 'N/A'}</p>
