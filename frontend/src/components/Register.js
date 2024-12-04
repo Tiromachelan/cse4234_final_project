@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Register.css";
+import "../style/Register.css";
 import SignIn from "./SignIn.js";
 
 export default function Register({ closeModal }) {
