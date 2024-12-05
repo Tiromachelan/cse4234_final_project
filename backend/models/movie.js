@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-// Schema for the movies
 const MovieSchema = new Schema(
     {
         year: Number,

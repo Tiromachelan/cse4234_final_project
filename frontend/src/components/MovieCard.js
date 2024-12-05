@@ -7,7 +7,6 @@ const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteT
   const { cookies } = useContext(UserContext);
   const isLoggedIn = cookies['session-cookie'];
 
-  // Add to favorites
   const handleAddToFavorites = () => {
     fetch('/favorite', {
       method: 'POST',
@@ -27,7 +26,6 @@ const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteT
       .catch(error => console.error(error));
   };
 
-  // Remove from favorites
   const handleRemoveFromFavorites = () => {
     fetch('/unfavorite', {
       method: 'POST',
@@ -47,7 +45,6 @@ const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteT
       .catch(error => console.error(error));
   };
 
-  // put the duration into hour-minute format
   const formatDuration = (seconds) => {
     if (!seconds) return 'N/A';
     const hours = Math.floor(seconds / 3600);
@@ -55,7 +52,6 @@ const MovieCard = ({ title, imageUrl, rating, duration, isFavorited, onFavoriteT
     return `${hours}h ${minutes}m`;
   };
 
-  // Http does not work, so replace with https
   const formatImgURL = (imageUrl) => {
     if (imageUrl.startsWith('http://')) {
       return imageUrl.replace('http://', 'https://');
