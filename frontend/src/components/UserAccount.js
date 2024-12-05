@@ -8,6 +8,7 @@ function UserAccount() {
   const [movies, setMovies] = useState([]);
   const [message, setMessage] = useState('');
 
+  // Find favorited movies
   const fetchFavoritedMovies = () => {
     fetch('/favorited', {
       method: 'GET',
@@ -46,6 +47,7 @@ function UserAccount() {
     return <p>You have not favorited any movies yet.</p>;
   }
 
+  // Display favorited movies to the user account page
   return (
     <div className="movies-grid">
       {movies.map(movie => (

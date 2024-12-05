@@ -7,7 +7,7 @@ function UserProviderWrapper({ children }) {
     const [cookies, setCookie, removeCookie] = useCookies();
 
 
-
+  // Cookie is set upon visiting the page
   return (
     <CookiesProvider defaultSetOptions={{ path: '/' }}>
         <UserContext.Provider value={{ cookies, setCookie, removeCookie }}>
