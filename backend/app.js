@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // for serving build
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.listen(3000, () => console.log('Server ready on port 3000'));
 
 // connect to mongodb
